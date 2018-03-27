@@ -2,6 +2,8 @@ package cz.levinzonr.cryptostore.model
 
 import android.os.Handler
 import android.util.Log
+import rx.Observable
+import java.util.concurrent.TimeUnit
 
 class ExchangeRatesRemote {
 
@@ -18,13 +20,11 @@ class ExchangeRatesRemote {
 
     }
 
-     fun geExchangeRates(callbacks: OnRemoteDataReady) {
+     fun geExchangeRates() : Observable<ArrayList<Currency>> {
         Log.d(TAG, "Start loading data...")
-        Handler().postDelayed({callbacks.onDataReady(items())}, 2000)
+         return Observable.just(ExchangeRatesLocal.items()).delay(2, TimeUnit.SECONDS)
     }
 
-    interface OnRemoteDataReady {
-        fun onDataReady(list: ArrayList<Currency>)
-    }
+
 
 }

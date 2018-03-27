@@ -1,20 +1,21 @@
 package cz.levinzonr.cryptostore.model
 
-class RatesRepo {
+import android.content.Context
+import cz.levinzonr.cryptostore.NetworkManager
+import rx.Observable
+
+class RatesRepo(context: Context) {
 
     val localData = ExchangeRatesLocal()
     val remoteData = ExchangeRatesRemote()
+    val netManager: NetworkManager = NetworkManager(context)
 
-     fun geExchangeRates(callbacks: OnRepoReadyCallbacks) {
-        remoteData.geExchangeRates(object : ExchangeRatesRemote.OnRemoteDataReady{
-            override fun onDataReady(list: ArrayList<Currency>) {
-                callbacks.onDataReady(list)
-                localData.saveRates(list)
-            }
-        })
-    }
+     fun geExchangeRates() : Observable<ArrayList<Currency>> {
 
-    interface OnRepoReadyCallbacks {
-        fun  onDataReady(list: ArrayList<Currency>)
-    }
+         if (netManager.isConnectedToInternet()){
+             remoteData.geExchangeRates()
+         }
+         return localData.geExchangeRates()
+     }
+
 }
