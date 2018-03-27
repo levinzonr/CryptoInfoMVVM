@@ -1,6 +1,7 @@
 package cz.levinzonr.cryptostore.view
 
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -13,13 +14,14 @@ import android.view.ViewGroup
 
 import cz.levinzonr.cryptostore.R
 import cz.levinzonr.cryptostore.databinding.FragmentExchangeRatesBinding
+import cz.levinzonr.cryptostore.model.Currency
 import cz.levinzonr.cryptostore.viewmodel.RatesViewModel
 
 
 class ExchangeRatesFragment : Fragment() {
 
     lateinit var binding: FragmentExchangeRatesBinding
-    lateinit var adapter: CurrencyItemsAdapter
+    lateinit var rvAdapter: CurrencyItemsAdapter
 
     companion object {
         const val TAG = "RatesFragment"
@@ -29,16 +31,22 @@ class ExchangeRatesFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         Log.d(TAG, "onCreateView")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exchange_rates, container, false)
-        binding.ratesViewModel = ViewModelProviders.of(this).get(RatesViewModel::class.java)
-        initRecylerView()
+        val viewModel = ViewModelProviders.of(this).get(RatesViewModel::class.java)
+
+        binding.ratesViewModel = viewModel
         binding.executePendingBindings()
+        initRecyclerView()
+        viewModel.items.observe(this, Observer {
+            Log.d(TAG, it.toString())
+            rvAdapter.addItems(it!!)
+        })
         return binding.root
     }
 
-    private fun initRecylerView() {
-        adapter = CurrencyItemsAdapter()
+    private fun initRecyclerView() {
+        rvAdapter = CurrencyItemsAdapter()
         binding.recyclerView.apply {
-            adapter = adapter
+            adapter = rvAdapter
             layoutManager = LinearLayoutManager(context)
         }
     }
