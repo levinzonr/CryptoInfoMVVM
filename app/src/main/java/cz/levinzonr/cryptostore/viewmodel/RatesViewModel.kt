@@ -20,7 +20,7 @@ class RatesViewModel : ViewModel() {
         const val TAG = "RatesViewModel"
     }
 
-    fun refresh() {
+    fun getExcahngeRates() {
         Log.d(TAG, "Refreshing")
         isLoading.set(true)
         model.getExchangeRates(object : CurrencyExchangeModel.OnDataLoadedCallback {
