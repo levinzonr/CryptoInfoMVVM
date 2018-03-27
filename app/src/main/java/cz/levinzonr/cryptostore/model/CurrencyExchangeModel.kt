@@ -1,9 +1,7 @@
 package cz.levinzonr.cryptostore.model
 
-import android.arch.lifecycle.ViewModel
 import android.os.Handler
 import android.util.Log
-import android.view.View
 
 class CurrencyExchangeModel{
 

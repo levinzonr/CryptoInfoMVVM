@@ -14,7 +14,6 @@ import android.view.ViewGroup
 
 import cz.levinzonr.cryptostore.R
 import cz.levinzonr.cryptostore.databinding.FragmentExchangeRatesBinding
-import cz.levinzonr.cryptostore.model.Currency
 import cz.levinzonr.cryptostore.viewmodel.RatesViewModel
 
 

@@ -10,8 +10,8 @@ import cz.levinzonr.cryptostore.R
 import cz.levinzonr.cryptostore.databinding.ItemCurrencyBinding
 import cz.levinzonr.cryptostore.model.Currency
 
-class CurrencyItemsAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val items = ArrayList<Currency>()
+class CurrencyItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val items = ArrayList<Currency>()
 
     inner class ViewHolder(val binding: ItemCurrencyBinding) : RecyclerView.ViewHolder(binding.root) {
 
