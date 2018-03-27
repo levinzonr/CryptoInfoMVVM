@@ -3,11 +3,11 @@ package cz.levinzonr.cryptostore.model
 import android.os.Handler
 import android.util.Log
 
-class CurrencyExchangeModel{
+class ExchangeRatesRemote {
 
     companion object {
 
-        const val TAG = "Model"
+        const val TAG = "RatesRemote"
 
          fun items(): ArrayList<Currency>{
              val items = ArrayList<Currency>()
@@ -18,13 +18,13 @@ class CurrencyExchangeModel{
 
     }
 
-    fun getExchangeRates(callback: OnDataLoadedCallback) {
+     fun geExchangeRates(callbacks: OnRemoteDataReady) {
         Log.d(TAG, "Start loading data...")
-        Handler().postDelayed({callback.onLoaded(items())}, 2000)
+        Handler().postDelayed({callbacks.onDataReady(items())}, 2000)
     }
 
-    interface OnDataLoadedCallback {
-        fun onLoaded(loadedItems: ArrayList<Currency>)
+    interface OnRemoteDataReady {
+        fun onDataReady(list: ArrayList<Currency>)
     }
 
 }
