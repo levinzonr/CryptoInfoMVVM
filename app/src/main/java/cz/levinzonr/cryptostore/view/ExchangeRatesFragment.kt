@@ -41,6 +41,7 @@ class ExchangeRatesFragment : Fragment() {
             Log.d(TAG, it.toString())
             rvAdapter.addItems(it!!)
         })
+        viewModel.getExchangeRates()
         return binding.root
     }
 
