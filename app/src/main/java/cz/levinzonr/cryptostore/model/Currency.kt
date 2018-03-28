@@ -1,8 +1,12 @@
 package cz.levinzonr.cryptostore.model
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 class Currency(
+        @PrimaryKey
         val id: String,
         val name: String,
         val symbol: String,

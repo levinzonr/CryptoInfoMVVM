@@ -6,7 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
 import android.util.Log
 import cz.levinzonr.cryptostore.model.Currency
-import cz.levinzonr.cryptostore.model.RatesRepo
+import cz.levinzonr.cryptostore.model.RatesRepository
 import rx.Subscriber
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -16,7 +16,7 @@ class RatesViewModel(app: Application) : AndroidViewModel(app) {
     init{
         Log.d(TAG, "Init")
     }
-    var model = RatesRepo(app)
+    var model = RatesRepository(app)
     val isLoading : ObservableField<Boolean> = ObservableField()
     var items = MutableLiveData<ArrayList<Currency>>()
 
@@ -32,11 +32,11 @@ class RatesViewModel(app: Application) : AndroidViewModel(app) {
         subscription  = model.geExchangeRates()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<ArrayList<Currency>>(){
+                .subscribe(object : Subscriber<List<Currency>>(){
 
-            override fun onNext(t: ArrayList<Currency>?) {
+            override fun onNext(t: List<Currency>?) {
                 Log.d(TAG, "onNext: $t")
-                items.value = t
+                items.value = ArrayList(t)
             }
 
             override fun onCompleted() {

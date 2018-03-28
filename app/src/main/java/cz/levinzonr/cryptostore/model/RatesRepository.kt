@@ -4,12 +4,12 @@ import android.content.Context
 import cz.levinzonr.cryptostore.NetworkManager
 import rx.Observable
 
-class RatesRepo(context: Context) {
+class RatesRepository(context: Context) {
 
-    val localData = ExchangeRatesLocal()
+    val localData = ExchangeRatesLocal(context)
     val netManager: NetworkManager = NetworkManager(context)
 
-     fun geExchangeRates() : Observable<ArrayList<Currency>> {
+     fun geExchangeRates() : Observable<List<Currency>> {
 
          if (netManager.isConnectedToInternet()){
              return ExchangeRatesRemote.instance().geExchangeRates()

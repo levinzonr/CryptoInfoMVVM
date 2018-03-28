@@ -41,13 +41,13 @@ class ExchangeRatesRemote {
 
     }
 
-     fun geExchangeRates() : Observable<ArrayList<Currency>> {
+     fun geExchangeRates() : Observable<List<Currency>> {
         Log.d(TAG, "Start loading data...")
          return service.getExchangeRates()
     }
 
     interface CoinMarketCapService {
-        @GET("ticker") fun getExchangeRates() : Observable<ArrayList<Currency>>
+        @GET("ticker") fun getExchangeRates() : Observable<List<Currency>>
     }
 
 }
