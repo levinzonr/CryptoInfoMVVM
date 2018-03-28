@@ -43,7 +43,7 @@ class ExchangeRatesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        rvAdapter = CurrencyItemsAdapter()
+        rvAdapter = CurrencyItemsAdapter(context)
         binding.recyclerView.apply {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(context)
