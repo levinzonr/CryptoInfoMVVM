@@ -29,7 +29,7 @@ class CurrencyItemsAdapter(val context: Context) : RecyclerView.Adapter<Recycler
             val index = Math.abs(Random().nextInt() % 5 )
             val color = Color.parseColor(COLORS[index])
             binding.currencyPrice.text = context.getString(R.string.global_currency_usd, currency.priceUsd)
-            binding.currencyShort.background.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+            binding.currencyShort.background.setColorFilter(color, PorterDuff.Mode.SRC_OVER)
             binding.currencyTrendingPercentage.text = context.getString(R.string.global_percentage, currency.percentChange1h)
             if (currency.percentChange1h >= 0) {
                 binding.currencyTrendingImage.setImageResource(R.drawable.ic_trending_up_black_24dp)
@@ -59,6 +59,7 @@ class CurrencyItemsAdapter(val context: Context) : RecyclerView.Adapter<Recycler
 
     fun addItems(list: ArrayList<Currency>) {
         Log.d("Adapter", "ITems added")
+        items.clear()
         items.addAll(list)
         notifyDataSetChanged()
     }
