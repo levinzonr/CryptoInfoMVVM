@@ -5,5 +5,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="global_percentage" translatable="false">%1$.2f%%</string>
+    <string name="global_currency_usd" translatable="false">$%1$.2f</string>
 
 </resources>

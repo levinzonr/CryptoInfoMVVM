@@ -28,6 +28,7 @@ class CurrencyItemsAdapter(val context: Context) : RecyclerView.Adapter<Recycler
             binding.currency = currency
             val index = Math.abs(Random().nextInt() % 5 )
             val color = Color.parseColor(COLORS[index])
+            binding.currencyPrice.text = context.getString(R.string.global_currency_usd, currency.priceUsd)
             binding.currencyShort.background.setColorFilter(color, PorterDuff.Mode.SRC_IN)
             binding.currencyTrendingPercentage.text = context.getString(R.string.global_percentage, currency.percentChange1h)
             if (currency.percentChange1h >= 0) {
