@@ -4,9 +4,11 @@ package cz.levinzonr.cryptostore.view
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +49,17 @@ class ExchangeRatesFragment : Fragment() {
         binding.recyclerView.apply {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(context)
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: RecyclerView.State?) {
+                    super.getItemOffsets(outRect, view, parent, state)
+                    if (parent  != null && parent.adapter != null) {
+                        if (parent.getChildAdapterPosition(view) != parent.adapter.itemCount - 1) {
+                            outRect?.bottom = 5
+                        }
+                    }
+
+                }
+            })
         }
     }
 
