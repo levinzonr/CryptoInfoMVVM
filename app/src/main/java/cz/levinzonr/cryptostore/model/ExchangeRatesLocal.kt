@@ -14,8 +14,12 @@ class ExchangeRatesLocal {
 
          fun items(): ArrayList<Currency>{
              val items = ArrayList<Currency>()
-             items.add(Currency("bitcoint", "Bitcoin", "BTC", 202031.1))
-             items.add(Currency("ethereum","Ethereum", "ETH", 12.1844))
+             items.add(Currency("bitcoint",
+                     "Bitcoin", "BTC",
+                     202031.1, 1, 22.2,
+                     2.2, 2.2, System.currentTimeMillis()))
+             items.add(Currency("ethereum","Ethereum", "ETH", 202031.1, 1, 22.2,
+                     2.2, 2.2, System.currentTimeMillis()))
              return items
          }
 
