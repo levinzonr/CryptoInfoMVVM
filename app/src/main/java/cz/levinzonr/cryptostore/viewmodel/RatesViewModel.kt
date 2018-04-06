@@ -32,7 +32,10 @@ class RatesViewModel(app: Application) : AndroidViewModel(app) {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { value -> items.value = ArrayList(value) },
+                        { value ->
+                            items.value = ArrayList(value)
+                            isLoading.set(false)
+                        },
                         { e: Throwable? -> isLoading.set(false); Log.d(TAG, "onErrir: $e") },
                         { isLoading.set(false) }
                 ))
