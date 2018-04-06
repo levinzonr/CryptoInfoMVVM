@@ -9,14 +9,14 @@ import cz.levinzonr.cryptostore.model.Currency
 import cz.levinzonr.cryptostore.model.RatesRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import org.reactivestreams.Publisher
 
 class RatesViewModel(app: Application) : AndroidViewModel(app) {
     init{
         Log.d(TAG, "Init")
     }
-    var model = RatesRepository(app)
+    var repository = RatesRepository(app)
     val isLoading : ObservableField<Boolean> = ObservableField()
     var items = MutableLiveData<ArrayList<Currency>>()
     var cd = CompositeDisposable()
@@ -28,26 +28,14 @@ class RatesViewModel(app: Application) : AndroidViewModel(app) {
     fun getExchangeRates() {
         Log.d(TAG, "Refreshing")
         isLoading.set(true)
-        cd.add(model.geExchangeRates()
+        cd.add(repository.geExchangeRates()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableObserver<List<Currency>>() {
-                    override fun onComplete() {
-                        Log.d(TAG, "Oncomplet")
-                        isLoading.set(false)
-                    }
-
-                    override fun onNext(t: List<Currency>) {
-                        Log.d(TAG, "Oncomplet")
-                        items.value = ArrayList(t)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.d(TAG, "Oncomplet")
-                        isLoading.set(false)
-                    }
-                }))
-
+                .subscribe(
+                        { value -> items.value = ArrayList(value) },
+                        { e: Throwable? -> isLoading.set(false); Log.d(TAG, "onErrir: $e") },
+                        { isLoading.set(false) }
+                ))
     }
 
     override fun onCleared() {

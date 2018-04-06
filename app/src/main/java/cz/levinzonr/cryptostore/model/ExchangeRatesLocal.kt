@@ -1,13 +1,10 @@
 package cz.levinzonr.cryptostore.model
 
 import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-import android.os.Handler
 import android.util.Log
-import android.util.TimeUtils
 import cz.levinzonr.cryptostore.model.roomdb.AppDatabase
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import java.util.concurrent.TimeUnit
 
 class ExchangeRatesLocal(val context: Context) {
@@ -30,9 +27,9 @@ class ExchangeRatesLocal(val context: Context) {
 
     }
 
-     fun geExchangeRates() : Observable<List<Currency>> {
+     fun geExchangeRates() : Flowable<List<Currency>> {
         Log.d(TAG, "Start loading data...")
-        return Observable.just(items()).delay(2,TimeUnit.SECONDS)
+        return Flowable.just(items()).delay(2,TimeUnit.SECONDS)
     }
 
     fun saveRates(list: ArrayList<Currency>) {
