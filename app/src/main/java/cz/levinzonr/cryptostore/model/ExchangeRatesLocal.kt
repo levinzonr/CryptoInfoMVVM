@@ -7,7 +7,7 @@ import android.os.Handler
 import android.util.Log
 import android.util.TimeUtils
 import cz.levinzonr.cryptostore.model.roomdb.AppDatabase
-import rx.Observable
+import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 
 class ExchangeRatesLocal(val context: Context) {

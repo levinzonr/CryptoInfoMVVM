@@ -2,7 +2,7 @@ package cz.levinzonr.cryptostore.model
 
 import android.content.Context
 import cz.levinzonr.cryptostore.NetworkManager
-import rx.Observable
+import io.reactivex.Observable
 
 class RatesRepository(context: Context) {
 
