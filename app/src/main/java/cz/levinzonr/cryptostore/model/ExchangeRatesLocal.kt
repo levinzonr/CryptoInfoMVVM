@@ -1,37 +1,23 @@
 package cz.levinzonr.cryptostore.model
 
-import android.os.Handler
+import android.arch.persistence.room.Room
+import android.content.Context
 import android.util.Log
-import android.util.TimeUtils
-import rx.Observable
+import cz.levinzonr.cryptostore.model.roomdb.AppDatabase
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ExchangeRatesLocal {
+class ExchangeRatesLocal(val context: Context) {
+    private val database: AppDatabase = AppDatabase.getInstance(context)
 
-    companion object {
-
-        const val TAG = "RatesLocal"
-
-         fun items(): ArrayList<Currency>{
-             val items = ArrayList<Currency>()
-             items.add(Currency("bitcoint",
-                     "Bitcoin", "BTC",
-                     202031.1, 1, 22.2,
-                     2.2, 2.2, System.currentTimeMillis()))
-             items.add(Currency("ethereum","Ethereum", "ETH", 202031.1, 1, 22.2,
-                     2.2, 2.2, System.currentTimeMillis()))
-             return items
-         }
-
+     fun geExchangeRates() : Flowable<List<Currency>> {
+       return database.currencyDAO().getAll()
     }
 
-     fun geExchangeRates() : Observable<ArrayList<Currency>> {
-        Log.d(TAG, "Start loading data...")
-        return Observable.just(items()).delay(2,TimeUnit.SECONDS)
-    }
-
-    fun saveRates(list: ArrayList<Currency>) {
-
+    fun saveRates(list: List<Currency>) : Completable {
+        return  Completable.fromRunnable({ database.currencyDAO().insert(list)})
     }
 
 }

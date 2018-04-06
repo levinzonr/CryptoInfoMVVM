@@ -1,16 +1,13 @@
 package cz.levinzonr.cryptostore.model
 
-import android.os.Handler
 import android.util.Log
-import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import io.reactivex.Flowable
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import rx.Observable
-import java.util.concurrent.TimeUnit
 
 class ExchangeRatesRemote {
 
@@ -19,7 +16,7 @@ class ExchangeRatesRemote {
             .create()
 
     private val retrofit = Retrofit.Builder()
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -41,13 +38,13 @@ class ExchangeRatesRemote {
 
     }
 
-     fun geExchangeRates() : Observable<ArrayList<Currency>> {
+     fun geExchangeRates() : Flowable<List<Currency>> {
         Log.d(TAG, "Start loading data...")
          return service.getExchangeRates()
     }
 
     interface CoinMarketCapService {
-        @GET("ticker") fun getExchangeRates() : Observable<ArrayList<Currency>>
+        @GET("ticker") fun getExchangeRates() : Flowable<List<Currency>>
     }
 
 }

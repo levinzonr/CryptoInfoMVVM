@@ -6,21 +6,20 @@ import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
 import android.util.Log
 import cz.levinzonr.cryptostore.model.Currency
-import cz.levinzonr.cryptostore.model.RatesRepo
-import rx.Subscriber
-import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import cz.levinzonr.cryptostore.model.RatesRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import org.reactivestreams.Publisher
 
 class RatesViewModel(app: Application) : AndroidViewModel(app) {
     init{
         Log.d(TAG, "Init")
     }
-    var model = RatesRepo(app)
+    var repository = RatesRepository(app)
     val isLoading : ObservableField<Boolean> = ObservableField()
     var items = MutableLiveData<ArrayList<Currency>>()
-
-    var subscription: Subscription? = null
+    var cd = CompositeDisposable()
 
     companion object {
         const val TAG = "RatesViewModel"
@@ -29,31 +28,23 @@ class RatesViewModel(app: Application) : AndroidViewModel(app) {
     fun getExchangeRates() {
         Log.d(TAG, "Refreshing")
         isLoading.set(true)
-        subscription  = model.geExchangeRates()
+        cd.add(repository.geExchangeRates()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Subscriber<ArrayList<Currency>>(){
-
-            override fun onNext(t: ArrayList<Currency>?) {
-                Log.d(TAG, "onNext: $t")
-                items.value = t
-            }
-
-            override fun onCompleted() {
-                Log.d(TAG, "onComplete")
-                isLoading.set(false)
-
-            }
-
-            override fun onError(e: Throwable?) {
-                Log.d(TAG, "Error: $e")
-            }
-        })
+                .subscribe(
+                        { value ->
+                            items.value = ArrayList(value)
+                            isLoading.set(false)
+                        },
+                        { e: Throwable? -> isLoading.set(false); Log.d(TAG, "onErrir: $e") },
+                        { isLoading.set(false) }
+                ))
     }
 
     override fun onCleared() {
         super.onCleared()
-        subscription?.unsubscribe()
+        if (!cd.isDisposed) {
+            cd.dispose()
+        }
     }
-
 }
