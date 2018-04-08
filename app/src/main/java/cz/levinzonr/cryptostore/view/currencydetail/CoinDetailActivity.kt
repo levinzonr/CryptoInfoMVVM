@@ -27,6 +27,10 @@ class CoinDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_coin_detail)
         setSupportActionBar(toolbar)
 
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, CoinDetailFragment.newInstance(intent.getStringExtra(ARG_COIN)))
+                .commit()
     }
 
 }
