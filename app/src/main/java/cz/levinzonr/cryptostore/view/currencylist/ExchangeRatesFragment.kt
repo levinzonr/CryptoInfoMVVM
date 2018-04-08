@@ -1,4 +1,4 @@
-package cz.levinzonr.cryptostore.view
+package cz.levinzonr.cryptostore.view.currencylist
 
 
 import android.arch.lifecycle.Observer

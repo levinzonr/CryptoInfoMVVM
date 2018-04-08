@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/fragment_rates"
-        class="cz.levinzonr.cryptostore.view.ExchangeRatesFragment"
+        class="cz.levinzonr.cryptostore.view.currencylist.ExchangeRatesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

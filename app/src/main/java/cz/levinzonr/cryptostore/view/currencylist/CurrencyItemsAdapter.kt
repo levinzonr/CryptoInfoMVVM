@@ -1,4 +1,4 @@
-package cz.levinzonr.cryptostore.view
+package cz.levinzonr.cryptostore.view.currencylist
 
 import android.content.Context
 import android.graphics.Color
@@ -6,7 +6,6 @@ import android.graphics.PorterDuff
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import cz.levinzonr.cryptostore.R
 import cz.levinzonr.cryptostore.databinding.ItemCurrencyBinding
