@@ -15,4 +15,7 @@ interface CurrencyDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(items: List<Currency>)
+
+    @Query("SELECT * from currency WHERE id LIKE :id")
+    fun getById(id: String) : Flowable<Currency>
 }

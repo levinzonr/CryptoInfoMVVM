@@ -20,4 +20,8 @@ class ExchangeRatesLocal(val context: Context) {
         return  Completable.fromRunnable({ database.currencyDAO().insert(list)})
     }
 
+    fun getCurrencyDetail(id: String) : Flowable<Currency> {
+        return database.currencyDAO().getById(id)
+    }
+
 }

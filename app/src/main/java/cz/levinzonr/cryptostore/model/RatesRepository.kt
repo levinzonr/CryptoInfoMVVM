@@ -23,4 +23,8 @@ class RatesRepository(context: Context) {
          return localData.geExchangeRates()
      }
 
+    fun getCurrencyDetail(id: String) : Flowable<Currency> {
+        return localData.getCurrencyDetail(id)
+    }
+
 }
