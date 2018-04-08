@@ -10,7 +10,7 @@ import io.reactivex.Flowable
 @Dao
 interface CurrencyDAO {
 
-    @Query("SELECT * from currency")
+    @Query("SELECT * from currency ORDER BY rank")
     fun getAll() : Flowable<List<Currency>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

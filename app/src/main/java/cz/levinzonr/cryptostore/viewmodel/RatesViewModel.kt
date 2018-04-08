@@ -34,6 +34,7 @@ class RatesViewModel(app: Application) : AndroidViewModel(app) {
                 .subscribe(
                         { value ->
                             items.value = ArrayList(value)
+                            Log.d(TAG, items.toString())
                             isLoading.set(false)
                         },
                         { e: Throwable? -> isLoading.set(false); Log.d(TAG, "onErrir: $e") },

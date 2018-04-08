@@ -7,8 +7,8 @@ import io.reactivex.Flowable
 
 class RatesRepository(context: Context) {
 
-    val localData = ExchangeRatesLocal(context)
-    val netManager: NetworkManager = NetworkManager(context)
+    private val localData = ExchangeRatesLocal(context)
+    private val netManager: NetworkManager = NetworkManager(context)
     private var toUpdate = false
 
      fun geExchangeRates() : Flowable<List<Currency>> {
@@ -16,7 +16,7 @@ class RatesRepository(context: Context) {
          if (netManager.isConnectedToInternet()){
              toUpdate = true
              return ExchangeRatesRemote.instance().geExchangeRates().flatMap {
-                 return@flatMap localData.saveRates(it).toFlowable<List<Currency>>()
+                 return@flatMap localData.saveRates(it).toSingleDefault(it).toFlowable()
              }
          }
          toUpdate = false
