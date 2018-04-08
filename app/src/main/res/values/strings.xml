@@ -8,4 +8,9 @@
     <string name="global_currency_usd" translatable="false">$%1$.2f</string>
     <string name="title_activity_coin_detail">CoinDetailActivity</string>
 
+    <string name="trending_hour">%1$.2f%% in a hour</string>
+    <string name="trending_day">%1$.2f%% in a day</string>
+    <string name="trending_week">%1$.2f%% this week</string>
+
+
 </resources>

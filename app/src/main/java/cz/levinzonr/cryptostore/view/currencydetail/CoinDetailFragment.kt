@@ -3,12 +3,16 @@ package cz.levinzonr.cryptostore.view.currencydetail
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 
 import cz.levinzonr.cryptostore.R
 import cz.levinzonr.cryptostore.databinding.FragmentCoinDetailBinding
@@ -40,9 +44,22 @@ class CoinDetailFragment : Fragment() {
         viewModel.getDetail(arguments.getString(ARG_COIN))
         viewModel.currency.observe(this, Observer {
             binding.currency = it
+            updateImage(binding.trendDayImage, it!!.percentChange24h >= 0)
+            updateImage(binding.trendHourImage, it.percentChange1h >= 0)
+            updateImage(binding.trendWeekImage, it.percentChange7d >= 0)
             binding.executePendingBindings()
         })
         binding.executePendingBindings()
         return binding.root
+    }
+
+    private fun updateImage(imageView: ImageView, isTrending: Boolean) {
+        if (isTrending) {
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_trending_up_black_24dp))
+            imageView.setColorFilter(Color.GREEN)
+        } else {
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_trending_down_black_24dp))
+            imageView.setColorFilter(Color.RED)
+        }
     }
 }
