@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import cz.levinzonr.cryptostore.R
+import cz.levinzonr.cryptostore.model.Currency
 
 import kotlinx.android.synthetic.main.activity_coin_detail.*
 
@@ -15,10 +17,11 @@ class CoinDetailActivity : AppCompatActivity() {
 
         const val ARG_COIN = "CoinId"
 
-        fun startAsIntent(context: Context, coinId: String) {
-            val intent = Intent(context, CoinDetailActivity::class.java)
-            intent.putExtra(ARG_COIN, coinId)
-            context.startActivity(intent)
+        fun startAsIntent(context: Context, coin: Currency) {
+            Log.d("NULL", coin.toString())
+            val startIntent = Intent(context, CoinDetailActivity::class.java)
+            startIntent.putExtra(ARG_COIN, coin)
+            context.startActivity(startIntent)
         }
     }
 
@@ -27,9 +30,12 @@ class CoinDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_coin_detail)
         setSupportActionBar(toolbar)
 
+        val coin: Currency = intent.extras.getParcelable(ARG_COIN)
+        supportActionBar?.title = coin.name
+
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, CoinDetailFragment.newInstance(intent.getStringExtra(ARG_COIN)))
+                .replace(R.id.container, CoinDetailFragment.newInstance(coin.id))
                 .commit()
     }
 

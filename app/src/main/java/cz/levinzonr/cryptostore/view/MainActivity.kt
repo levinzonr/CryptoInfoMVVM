@@ -21,6 +21,6 @@ class MainActivity : AppCompatActivity(), ExchangeRatesFragment.OnFragmentIntera
     }
 
     override fun onCurrencySelected(currency: Currency) {
-        CoinDetailActivity.startAsIntent(this, currency.id)
+        CoinDetailActivity.startAsIntent(this, currency)
     }
 }

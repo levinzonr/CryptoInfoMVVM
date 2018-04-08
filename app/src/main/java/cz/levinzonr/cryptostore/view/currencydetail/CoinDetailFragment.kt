@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,8 +44,8 @@ class CoinDetailFragment : Fragment() {
         binding.detailVM = viewModel
         viewModel.getDetail(arguments.getString(ARG_COIN))
         viewModel.currency.observe(this, Observer {
-            binding.currency = it
-            updateImage(binding.trendDayImage, it!!.percentChange24h >= 0)
+            binding.currency = it!!
+            updateImage(binding.trendDayImage, it.percentChange24h >= 0)
             updateImage(binding.trendHourImage, it.percentChange1h >= 0)
             updateImage(binding.trendWeekImage, it.percentChange7d >= 0)
             binding.executePendingBindings()
