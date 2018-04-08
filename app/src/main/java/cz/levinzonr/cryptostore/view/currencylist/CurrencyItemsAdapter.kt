@@ -12,8 +12,13 @@ import cz.levinzonr.cryptostore.databinding.ItemCurrencyBinding
 import cz.levinzonr.cryptostore.model.Currency
 import java.util.*
 
-class CurrencyItemsAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CurrencyItemsAdapter(val context: Context, val listener: ItemsListListener)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val items = ArrayList<Currency>()
+
+    interface ItemsListListener {
+        fun inItemClicked(currency: Currency)
+    }
 
     companion object {
          val COLORS = listOf(
@@ -24,6 +29,11 @@ class CurrencyItemsAdapter(val context: Context) : RecyclerView.Adapter<Recycler
     inner class ViewHolder(val binding: ItemCurrencyBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(currency: Currency) {
+
+            binding.root.setOnClickListener {
+                listener.inItemClicked(currency)
+            }
+
             binding.currency = currency
             val index = Math.abs(Random().nextInt() % 5 )
             val color = Color.parseColor(COLORS[index])

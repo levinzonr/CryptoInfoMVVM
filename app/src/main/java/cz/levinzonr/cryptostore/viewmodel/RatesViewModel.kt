@@ -10,7 +10,6 @@ import cz.levinzonr.cryptostore.model.RatesRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Publisher
 
 class RatesViewModel(app: Application) : AndroidViewModel(app) {
     init{

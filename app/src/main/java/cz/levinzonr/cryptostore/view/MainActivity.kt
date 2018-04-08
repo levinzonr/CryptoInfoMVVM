@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import cz.levinzonr.cryptostore.R
+import cz.levinzonr.cryptostore.model.Currency
+import cz.levinzonr.cryptostore.view.currencydetail.CoinDetailActivity
+import cz.levinzonr.cryptostore.view.currencylist.ExchangeRatesFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ExchangeRatesFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,4 +20,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
+    override fun onCurrencySelected(currency: Currency) {
+        CoinDetailActivity.startAsIntent(this, currency.id)
+    }
 }
